@@ -15,12 +15,14 @@ class LibroIndex extends Component
 
     public function crear()
     {
-        return view('livewire.libro-edit');
-        $libro = Libro::create([
-            'codigo' => $this->codigo,
-            'titulo' => $this->titulo,
-            'numpags' => $this->numpags,
-        ]);
+        // Libro::create([
+        //     'codigo' => $this->codigo,
+        //     'titulo' => $this->titulo,
+        //     'numpags' => $this->numpags,
+        // ]);
+        Libro::create(
+            $this->pull()
+        );
     }
 
     public function editar($libroid)
@@ -37,20 +39,17 @@ class LibroIndex extends Component
     {
         // Hace la actualización
         $libro = Libro::findOrFail($this->libroid);
-        $libro->fill([
-            'codigo' => $this->codigo,
-            'titulo' => $this->titulo,
-            'numpags' => $this->numpags,
-        ]);
+        $libro->fill(
+            $this->pull()
+        );
         $libro->save();
         $this->reset();
-        $this->estaEditando = false;
     }
 
     public function cancelar()
     {
         $this->reset();
-        $this->estaEditando = false;
+        // $this->estaEditando = false;
     }
 
     public function eliminar($libroid)
